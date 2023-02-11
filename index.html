@@ -55,8 +55,8 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4 && xhr.status === 200) {
             var json = JSON.parse(xhr.responseText);
-            var response = json.choices[0].text;
-
+            // var response = json.choices[0].text;
+            var response = json.text
             // 将CHATGPT的返回值输出到文本框
             var responseText = document.getElementById("chatgpt-response");
             var index = 0;

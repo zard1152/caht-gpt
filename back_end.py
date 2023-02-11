@@ -3,7 +3,7 @@
 import requests
 from googletrans import Translator
 import time
-from flask import Flask, request
+from flask import Flask, request,jsonify
 from wsgiref.simple_server import make_server
 
 
@@ -103,7 +103,8 @@ def index():
             chat_answer = send_message(google_translated + ",Please embellish your answer for human understanding")
             answer_for_customer = translate_languages(chat_answer, "zh-cn")
             # 执行函数内容
-            return answer_for_customer + " Function executed successfully"
+            resp = jsonify({"text": answer_for_customer})
+            return resp  # + " Function executed successfully"
         except:
             return 'request error'
 
