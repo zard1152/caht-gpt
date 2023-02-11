@@ -10,7 +10,7 @@ from wsgiref.simple_server import make_server
 SV = Flask(__name__)
 
 using_model = "text-davinci-003"
-api_key = "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"
+api_key = "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"
 url = 'https://api.openai.com/v1/completions'
 # url = 'https://api.openai.com/v1/engines/text-davinci-003'
 # openai.api_key = api_key
