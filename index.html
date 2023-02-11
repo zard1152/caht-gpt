@@ -50,7 +50,7 @@
         // var url = "https://api.openai.com/v1/completions";
         var url = "http://artclass.eu.org:18081/GetContent";
         xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.setRequestHeader("Authorization", "Bearer 123456");
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4 && xhr.status === 200) {

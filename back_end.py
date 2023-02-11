@@ -1,5 +1,4 @@
-
-# test
+# -*- coding: UTF-8 -*-
 import requests
 from googletrans import Translator
 import time
@@ -104,7 +103,7 @@ def index():
             answer_for_customer = translate_languages(chat_answer, "zh-cn")
             # 执行函数内容
             resp = jsonify({"text": answer_for_customer})
-            return resp  # + " Function executed successfully"
+            return resp.encode('utf-8')  # + " Function executed successfully"
         except:
             return 'request error'
 
