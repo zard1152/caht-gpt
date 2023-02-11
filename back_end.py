@@ -99,7 +99,8 @@ def send_message(message):
 @SV.route("/GetContent", methods=["POST"])
 def index():
     user_agent = request.headers.get("User-Agent")
-    if user_agent == "my-js-frontend":
+    print(f'''if {user_agent} == "my-js-frontend":''')
+    if "my-js-frontend" in user_agent :
         try:
             message = request.json["prompt"]
             print(message)
