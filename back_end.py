@@ -13,6 +13,7 @@ from flask_cors import CORS
 
 SV = Flask(__name__)
 CORS(SV) # allow cross-domain
+
 using_model = "text-davinci-003"
 api_key = "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"
 url = 'https://api.openai.com/v1/completions'
@@ -97,8 +98,8 @@ def send_message(message):
 
 @SV.route("/GetContent", methods=["POST"])
 def index():
-    allowed_ip = "216.127.189.231" # 指定的 IP 地址
-    if request.remote_addr == allowed_ip:
+    user_agent = request.headers.get("User-Agent")
+    if user_agent == "my-js-frontend":
         try:
             message = request.json["prompt"]
             print(message)
