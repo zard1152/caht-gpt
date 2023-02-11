@@ -15,7 +15,7 @@ SV = Flask(__name__)
 CORS(SV) # allow cross-domain
 
 using_model = "text-davinci-003"
-api_key = "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"
+api_key = "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"
 url = 'https://api.openai.com/v1/completions'
 # url = 'https://api.openai.com/v1/engines/text-davinci-003'
 # openai.api_key = api_key
@@ -70,9 +70,8 @@ def send_message(message):
             json={
             # "top_p": 1,
             # "frequency_penalty": 0,
-            # "presence_penalty": 0,
             # "model": "text-davinci-003"
-            "model": using_model, "prompt": message, "temperature": 0.5, "max_tokens": 2048
+            "model": using_model, "prompt": message, "temperature": 0.5,"presence_penalty": 0, "max_tokens": 2048
             }
         )
 
