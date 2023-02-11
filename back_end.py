@@ -98,7 +98,8 @@ def index():
         try:
             message = request.json["prompt"]
             print(message)
-            google_translated = translate_languages("微波炉的工作原理","en")
+            # google_translated = translate_languages("微波炉的工作原理","en")
+            google_translated = translate_languages(message,"en")
             chat_answer = send_message(google_translated + ",Please embellish your answer for human understanding")
             answer_for_customer = translate_languages(chat_answer, "zh-cn")
             # 执行函数内容
