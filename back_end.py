@@ -4,10 +4,15 @@ from googletrans import Translator
 import time
 from flask import Flask, request,jsonify
 from wsgiref.simple_server import make_server
+from flask_cors import CORS
+
+
+
+
 
 
 SV = Flask(__name__)
-
+CORS(SV)
 using_model = "text-davinci-003"
 api_key = "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"
 url = 'https://api.openai.com/v1/completions'
