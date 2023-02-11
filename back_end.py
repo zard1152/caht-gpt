@@ -98,9 +98,8 @@ def send_message(message):
 
 @SV.route("/GetContent", methods=["POST"])
 def index():
-    user_agent = request.headers.get("User-Agent")
-    print(f'''if {user_agent} == "my-js-frontend":''')
-    if "my-js-frontend" in user_agent :
+    Referer = request.headers.get("Referer")
+    if "artclass.eu.org" in Referer :
         try:
             message = request.json["prompt"]
             print(message)
