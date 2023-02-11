@@ -12,7 +12,7 @@ from flask_cors import CORS
 
 
 SV = Flask(__name__)
-CORS(SV)
+CORS(SV) # allow cross-domain
 using_model = "text-davinci-003"
 api_key = "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"
 url = 'https://api.openai.com/v1/completions'
