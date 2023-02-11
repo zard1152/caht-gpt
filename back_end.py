@@ -106,8 +106,7 @@ def index():
 
 
 if __name__ == '__main__':
-    server = make_server('0.0.0.0', 9302, SV)
-    # server = make_server('0.0.0.0', 9303, SV)
+    server = make_server('0.0.0.0', 18081, SV)
     server.serve_forever()
 
 #     begin_time = time.time()
