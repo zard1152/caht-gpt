@@ -95,17 +95,24 @@ def send_message(message):
 def index():
     allowed_ip = "216.127.189.231" # 指定的 IP 地址
     if request.remote_addr == allowed_ip:
-        google_translated = translate_languages("微波炉的工作原理","en")
-        chat_answer = send_message(google_translated + ",Please embellish your answer for human understanding")
-        answer_for_customer = translate_languages(chat_answer, "zh-cn")
-        # 执行函数内容
-        return answer_for_customer + " Function executed successfully"
+        try:
+            message = request.json["prompt"]
+            print(message)
+            google_translated = translate_languages("微波炉的工作原理","en")
+            chat_answer = send_message(google_translated + ",Please embellish your answer for human understanding")
+            answer_for_customer = translate_languages(chat_answer, "zh-cn")
+            # 执行函数内容
+            return answer_for_customer + " Function executed successfully"
+        except:
+            return 'request error'
+
     else:
         return "Authentication failed"
 
 
 
 if __name__ == '__main__':
+    SV.config['JSON_AS_ASCII'] = False
     server = make_server('0.0.0.0', 18081, SV)
     server.serve_forever()
 
