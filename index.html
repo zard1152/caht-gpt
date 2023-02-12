@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="css/responsive.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     <script>
-	    async function callCHATGPT() {
+	    async function callCHATGPT(language) {
 		var responseText1 = document.getElementById("chatgpt-response");
 		responseText1.innerHTML = ""
         function printMessage(message) {
@@ -78,8 +78,8 @@
 
         var data = JSON.stringify({
           "prompt": document.getElementById("chat-gpt-input").value,
-          "salf_cdoe": "12354"
-          // "language_type": "en"
+          "salf_cdoe": "12354",
+          "language_type": language
           // "max_tokens": 2048,
           // "temperature": 0.5,
           // "top_p": 1,
@@ -127,9 +127,14 @@
               </div>
               <div class="col-md-3 col-sm-3 col-xs-12">
                 <div class="call-to-action">
-                  <button onclick="callCHATGPT()" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>发送
-                    <br>Answer</button></div>
+                  <button onclick="callCHATGPT(language='cn')" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">用中文回答我</span>
+                </div>
+                <p></p>
+                <div class="call-to-action">
+                    <button onclick="callCHATGPT(language='en')" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Answer in Eng</span>
+                </div>
               </div>
               <div class="col-md-9 col-sm-9 col-xs-12">
                 <div class="form-group">

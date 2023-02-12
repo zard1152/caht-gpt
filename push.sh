@@ -1,4 +1,4 @@
-
+declation=$1
 echo 当前目录是：%cd%
 echo;
 
@@ -7,7 +7,7 @@ git add .
 echo;
 
 set /p declation=输入提交的commit信息:
-git commit -m "%declation%"
+git commit -m "${declation}"
 echo;
 
 git push

@@ -56,7 +56,7 @@ def count_use():
     except FileNotFoundError:
         with open("count_use.txt", "w") as file:
             file.write("1")
-            
+
 
 def translate_languages(translate_messages,dest='en') :
     try:
@@ -109,14 +109,19 @@ def send_message(message):
 @SV.route("/GetContent", methods=["POST"])
 def index():
     Referer = request.headers.get("Referer")
+    global google_translated
+    global answer_for_customer
     if "artclass.eu.org" in Referer :
         try:
             message = request.json["prompt"]
+            language_type = request.json["language_type"]
             print(message)
             # google_translated = translate_languages("微波炉的工作原理","en")
-            google_translated = translate_languages(message,"en")
+            if language_type != 'en':
+                google_translated = translate_languages(message,"en")
             chat_answer = send_message(google_translated + ",Please embellish your answer for human understanding")
-            answer_for_customer = translate_languages(chat_answer, "zh-cn")
+            if language_type != 'en':
+                answer_for_customer = translate_languages(chat_answer, "zh-cn")
             # 执行函数内容
             resp = jsonify({"text": answer_for_customer})
             print("resp:" ,resp)
