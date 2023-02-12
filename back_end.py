@@ -109,7 +109,7 @@ def index():
             # 执行函数内容
             resp = jsonify({"text": answer_for_customer})
             print("resp:" ,resp)
-            return resp  # + " Function executed successfully"
+            return resp,200  # + " Function executed successfully"
         except:
             return 'request error'
 
