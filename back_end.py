@@ -109,21 +109,19 @@ def send_message(message):
 @SV.route("/GetContent", methods=["POST"])
 def index():
     Referer = request.headers.get("Referer")
-    global google_translated
-    global answer_for_customer
     if "artclass.eu.org" in Referer :
         try:
             message = request.json["prompt"]
             language_type = request.json["language_type"]
             print(message)
-            # google_translated = translate_languages("微波炉的工作原理","en")
-            if language_type != 'en':
-                google_translated = translate_languages(message,"en")
+            google_translated = translate_languages(message,"en")
             chat_answer = send_message(google_translated + ",Please embellish your answer for human understanding")
             if language_type != 'en':
                 answer_for_customer = translate_languages(chat_answer, "zh-cn")
-            # 执行函数内容
-            resp = jsonify({"text": answer_for_customer})
+                resp = jsonify({"text": answer_for_customer})
+                print("resp:" ,resp)
+                return resp,200  # + " Function executed successfully"
+            resp = jsonify({"text": chat_answer})
             print("resp:" ,resp)
             return resp,200  # + " Function executed successfully"
         except:
