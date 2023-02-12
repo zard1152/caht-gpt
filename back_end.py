@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 import requests
 from googletrans import Translator
 import time
@@ -25,7 +24,8 @@ proxies = {"http": "http://127.0.0.1:7890", "https": "http://127.0.0.1:7890"}
 model = "text-ada-001,text-babbage-001,text-curie-001,text-davinci-003"
 # translator = Translator(service_urls=['translate.google.com','translate.google.co.kr'])
 translator = Translator()
-
+req_retry_num = 3
+get_data_failed_num = 5
 
 def calculator_exec_time(run_time):
     hour = run_time // 3600
@@ -59,8 +59,8 @@ def translate_languages(translate_messages,dest='en') :
 def send_message(message):
     ## message = request.form["message"]
     local_message = message
-    req_retry_num = 3
-    get_data_failed_num = 10
+    global req_retry_num
+    global get_data_failed_num
     try:
         response = requests.post(url,
             headers={
@@ -78,7 +78,7 @@ def send_message(message):
 
         print(response.json())
         if response.json()["choices"]:
-            req_retry_num = 3
+            req_retry_num = 3 # init because success
             get_data_failed_num = 10
             response_text = response.json()["choices"][0]["text"]
             print(response_text)
@@ -92,7 +92,7 @@ def send_message(message):
         req_retry_num -= 1
         if req_retry_num != 0 :
             send_message(local_message)
-            return "oops, Data acquisition failed and is being repaired"
+            return "Oops, Data acquisition failed and is being repaired"
 
 
 @SV.route("/GetContent", methods=["POST"])
