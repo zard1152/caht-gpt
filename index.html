@@ -48,6 +48,7 @@
         }
         var xhr = new XMLHttpRequest();
         // var url = "https://api.openai.com/v1/completions";
+        var inputText = document.getElementById("chat-gpt-input").value;
         var url = "http://artclass.eu.org:18081/GetContent";
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -77,7 +78,7 @@
         };
 
         var data = JSON.stringify({
-          "prompt": document.getElementById("chat-gpt-input").value,
+          "prompt": inputText,
           "salf_cdoe": "12354",
           "language_type": language
           // "max_tokens": 2048,
@@ -113,7 +114,7 @@
     </header>
     <div class="basic-portfolio-area ptb-10" style="box-sizing: border-box;">
       <div class="filter-menu text-center mb-40">
-        <h5>与Ai对话,请描述您的需求-支持多语言,默认返回中文</h5>
+        <h5>与Ai对话,请描述您的需求-支持多语言,默认翻译返回中文,需要返回代码时请用英文提问,或者点击用英文回答</h5>
         <h4>访问费用由站长承担,请勿频繁访问！</h4>
         <h3>网站使用openai官方API,text-davinci-003型号</h3>
 	  </div>

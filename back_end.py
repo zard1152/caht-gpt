@@ -126,7 +126,6 @@ def index():
             return resp,200  # + " Function executed successfully"
         except:
             return  jsonify({"text": 'request error'}),200
-
     else:
         return jsonify({"text": "Authentication failed"}),200
 
