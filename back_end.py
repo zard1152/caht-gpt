@@ -45,7 +45,18 @@ def calculator_exec_time(run_time):
 # def tear_down_hooks(coustomer_messages):
 #     translate_languages(coustomer_messages,dest='zh-cn')
 #     pass
-
+def count_use():
+    try:
+        with open("count_use.txt", "r+") as file:
+            count = int(file.readline().strip())
+            count += 1
+            file.seek(0)
+            file.write(str(count))
+            file.truncate()
+    except FileNotFoundError:
+        with open("count_use.txt", "w") as file:
+            file.write("1")
+            
 
 def translate_languages(translate_messages,dest='en') :
     try:
