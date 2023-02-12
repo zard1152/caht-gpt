@@ -112,6 +112,8 @@ def index():
     if "artclass.eu.org" in Referer :
         try:
             message = request.json["prompt"]
+            if any(x in message for x in ["qwe123", "qwe1234"]): # check for sensitive word 
+                return jsonify({"text": '请不要涉zheng'}),200
             language_type = request.json["language_type"]
             print(message)
             google_translated = translate_languages(message,"en")
