@@ -14,7 +14,7 @@ SV = Flask(__name__)
 CORS(SV) # allow cross-domain
 
 using_model = "text-davinci-003"
-api_key = "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"
+api_key = "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"
 url = 'https://api.openai.com/v1/completions'
 # url = 'https://api.openai.com/v1/engines/text-davinci-003'
 # openai.api_key = api_key
@@ -108,7 +108,8 @@ def index():
             answer_for_customer = translate_languages(chat_answer, "zh-cn")
             # 执行函数内容
             resp = jsonify({"text": answer_for_customer})
-            return resp.encode('utf-8')  # + " Function executed successfully"
+            print("resp:" ,resp)
+            return resp  # + " Function executed successfully"
         except:
             return 'request error'
 
