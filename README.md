@@ -14,7 +14,12 @@ server {
 }
 }
 
+
+
+
+
 ```
+install requirement: pip3 install flask googletrans wsgiref
 
 change api_key use following command:
 sed -i "s/api_key =.*/api_key = {key}/g" /var/www/html/back_end.py

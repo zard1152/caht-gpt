@@ -26,97 +26,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    <script>
-	    async function callCHATGPT(language) {
-		var responseText1 = document.getElementById("chatgpt-response");
-		responseText1.innerHTML = ""
-        function printMessage(message) {
-          var responseText = document.getElementById("chatgpt-response");
-          var index = 0;
-
-          // 创建一个定时器，每隔一段时间打印一个字符
-          var interval = setInterval(function() {
-            responseText.innerHTML += message[index];
-            index++;
-
-            // 当打印完成时，清除定时器
-            if (index >= message.length) {
-              clearInterval(interval);
-            }
-          },
-          150); // 每隔50毫秒打印一个字符
-        }
-        var xhr = new XMLHttpRequest();
-        // var url = "https://api.openai.com/v1/completions";
-        var inputText = document.getElementById("chat-gpt-input").value;
-        var url = "http://artclass.eu.org:18081/GetContent";
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.setRequestHeader("Authorization", "Bearer 123456");
-        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-            var json = JSON.parse(xhr.responseText);
-            // var response = json.choices[0].text;
-            var response = json.text
-            // 将CHATGPT的返回值输出到文本框
-            var responseText = document.getElementById("chatgpt-response");
-            var index = 0;
-
-            // 创建一个定时器，每隔一段时间打印一个字符
-            var interval = setInterval(function() {
-              responseText.innerHTML += response[index];
-              index++;
-
-              // 当打印完成时，清除定时器
-              if (index >= response.length) {
-                clearInterval(interval);
-              }
-            },
-            50); // 每隔50毫秒打印一个字符
-          }
-        };
-
-        var data = JSON.stringify({
-          "prompt": inputText,
-          "salf_cdoe": "12354",
-          "language_type": language
-          // "max_tokens": 2048,
-          // "temperature": 0.5,
-          // "top_p": 1,
-          // "frequency_penalty": 0,
-          // "presence_penalty": 0,
-          // "model": "text-davinci-003"
-        });
-        console.log(data);
-        await printMessage('正在思考，请等待......');
-		await xhr.send(data);
-      }
-
-      function showDiv(textarea_module) {
-        if (textarea_module === "div_auto_display_P") {
-            var div = document.getElementById(textarea_module);
-            div.style.display = "block";
-          }
-        else if (textarea_module === "div_auto_display_Si") {
-            var div = document.getElementById(textarea_module);
-            div.style.display = "block";
-          }
-        else if (textarea_module === "div_auto_display_S") {
-            var div = document.getElementById(textarea_module);
-            div.style.display = "block";
-          }
-        else if (textarea_module === "div_auto_display_W") {
-            var div = document.getElementById(textarea_module);
-            div.style.display = "block";
-          }
-        else if (textarea_module === "div_auto_display_C") {
-            var div = document.getElementById(textarea_module);
-            div.style.display = "block";
-          }
-
-        }
-	</script>
+    <script src="js/functional.js"></script>
   </head>
 
   <body>
@@ -147,11 +57,13 @@
           <div class="row">
               <div class="form-group">
                 <label></label>
-                <textarea class="form-control" id="chat-gpt-input_W" placeholder="Api key: sk-...... if you have" rows="1" resize="none" style="box-sizing:border-box;width: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
+                <textarea class="form-control" id="chat-gpt-input" placeholder="Api key: sk-...... if you have" rows="1" resize="none" style="box-sizing:border-box;width: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
               </div>
+
+              
               <div class="form-group">
                 <label></label>
-                <textarea class="form-control" id="chatgpt-response"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
+                <textarea class="form-control" id="chatgpt-response_W"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
               </div>
               <div class="call-to-action">
                 <button onclick="callCHATGPT(language='cn')" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
@@ -161,7 +73,7 @@
 
               <div class="form-group" id="div_auto_display_C" style="display:none">
                 <label></label>
-                <textarea class="form-control" id="chatgpt-response"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
+                <textarea class="form-control" id="chatgpt-response_C"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
               </div>
               <div class="form-group">
                 <label></label>
@@ -175,7 +87,7 @@
               
               <div class="form-group" id="div_auto_display_W" style="display:none">
                 <label></label>
-                <textarea class="form-control" id="chatgpt-response"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
+                <textarea class="form-control" id="chatgpt-response_W"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
               </div>
               <div class="form-group">
                 <label></label>
@@ -190,7 +102,7 @@
 
               <div class="form-group" id="div_auto_display_S" style="display:none">
                 <label></label>
-                <textarea class="form-control" id="chatgpt-response"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
+                <textarea class="form-control" id="chatgpt-response_S"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
               </div>
               <div class="form-group">
                 <label></label>
@@ -205,7 +117,7 @@
 
               <div class="form-group" id="div_auto_display_Si" style="display:none">
                 <label></label>
-                <textarea class="form-control" id="chatgpt-response"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
+                <textarea class="form-control" id="chatgpt-response_Si"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
               </div>
               <div class="form-group">
                 <label></label>
@@ -220,7 +132,7 @@
 
               <div class="form-group" id="div_auto_display_P" style="display:none">
                 <label></label>
-                <textarea class="form-control" id="chatgpt-response"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
+                <textarea class="form-control" id="chatgpt-response_P"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
               </div>
 
               <div class="form-group">
