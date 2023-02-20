@@ -60,13 +60,12 @@
                 <textarea class="form-control" id="chat-gpt-input" placeholder="Api key: sk-...... if you have" rows="1" resize="none" style="box-sizing:border-box;width: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
               </div>
 
-              
               <div class="form-group">
                 <label></label>
                 <textarea class="form-control" id="chatgpt-response_D"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
               </div>
               <div class="call-to-action">
-                <button onclick="callCHATGPT(language='cn',targetElementId='chatgpt-response_D')" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                <button onclick="callCHATGPT(language='cn',targetElementId='chatgpt-response_D',inputElementId='chat-gpt-input_D')" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">用中文回答我</span>
               </div>
 
@@ -77,10 +76,10 @@
               </div>
               <div class="form-group">
                 <label></label>
-                <textarea class="form-control" id="chat-gpt-input_C" placeholder="输入问题描述,如: 在没有任何路可走时, 有一辆看不到前程的车, 我应不应该上车, 为什么大多数人选择了坐" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
+                <textarea class="form-control" id="chat-gpt-input_C" maxlength="3800" placeholder="输入问题描述,如: 在没有任何路可走时, 有一辆看不到前程的车, 我应不应该上车, 为什么大多数人选择了坐" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
               </div>
               <div class="call-to-action">
-                <button onclick="callCHATGPT(language='cn',targetElementId='chatgpt-response_C');showDiv('div_auto_display_C');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_C',inputElementId='chat-gpt-input_C');showDiv('div_auto_display_C');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Answer in Eng</span>
               </div>
 
@@ -91,10 +90,10 @@
               </div>
               <div class="form-group">
                 <label></label>
-                <textarea class="form-control" id="chat-gpt-input_W" placeholder="周报生成: 给出大纲, 生成周报. 示例: 完善文档, 健身, 玩电脑." rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
+                <textarea class="form-control" id="chat-gpt-input_W" placeholder="周报生成: 给出大纲, 生成周报. 示例: 完善文档, 健身, 玩电脑." maxlength="3800" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
               </div>
               <div class="call-to-action">
-                <button onclick="callCHATGPT(language='cn',targetElementId='chatgpt-response_W');showDiv('div_auto_display_W');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_W',inputElementId='chat-gpt-input_W');showDiv('div_auto_display_W');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Make weekly report</span>
               </div>
 
@@ -106,10 +105,10 @@
               </div>
               <div class="form-group">
                 <label></label>
-                <textarea class="form-control" id="chat-gpt-input_S" placeholder="总结文章内容" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
+                <textarea class="form-control" id="chat-gpt-input_S" placeholder="总结文章内容" rows="3" resize="none" maxlength="3800" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
               </div>
               <div class="call-to-action">
-                <button onclick="callCHATGPT(language='cn',targetElementId='chatgpt-response_S');showDiv('div_auto_display_S');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_S',inputElementId='chat-gpt-input_S');showDiv('div_auto_display_S');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Summary content</span>
               </div>
 
@@ -121,10 +120,10 @@
               </div>
               <div class="form-group">
                 <label></label>
-                <textarea class="form-control" id="chat-gpt-input_Si" placeholder="简化聊天内容" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
+                <textarea class="form-control" id="chat-gpt-input_Si" placeholder="简化聊天内容" rows="3" resize="none" maxlength="3800" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
               </div>
               <div class="call-to-action">
-                <button onclick="callCHATGPT(language='cn',targetElementId='chatgpt-response_Si');showDiv('div_auto_display_Si');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_Si',inputElementId='chat-gpt-input_Si');showDiv('div_auto_display_Si');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Chat Simplifier</span>
               </div>
               
@@ -137,10 +136,10 @@
 
               <div class="form-group">
                 <label></label>
-                <textarea class="form-control" id="chat-gpt-input_P" placeholder="英文对练-------------暂未开放" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
+                <textarea class="form-control" id="chat-gpt-input_P" placeholder="英文对练-------------暂未开放"  maxlength="3800" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
               </div>
               <div class="call-to-action">
-                <button onclick="callCHATGPT(language='cn',targetElementId='chatgpt-response_P');showDiv('div_auto_display_P');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_P',inputElementId='chat-gpt-input_P');showDiv('div_auto_display_P');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">practice eng</span>
               </div>
               <!-- <div class="col-md-3 col-sm-3 col-xs-12">

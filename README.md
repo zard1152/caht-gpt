@@ -14,14 +14,11 @@ server {
 }
 }
 
-
-
-
-
 ```
+
 install requirement: 
 ```
-pip3 install flask googletrans wsgiref
+pip3 install flask googletrans wsgiref pyyaml
 ```
 
 change api_key use following command:

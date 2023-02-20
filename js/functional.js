@@ -1,4 +1,4 @@
-async function callCHATGPT(language,targetElementId='chatgpt-response_D') {
+async function callCHATGPT(language='en',targetElementId='chatgpt-response_D',inputElementId='chat-gpt-input') {
     // var responseText1 = document.getElementById("chatgpt-response");
     var responseText1 = document.getElementById(targetElementId);
     responseText1.innerHTML = ""
@@ -20,7 +20,7 @@ async function callCHATGPT(language,targetElementId='chatgpt-response_D') {
     }
     var xhr = new XMLHttpRequest();
     // var url = "https://api.openai.com/v1/completions";
-    var inputText = document.getElementById("chat-gpt-input").value;
+    var inputText = document.getElementById(inputElementId).value;
     var url = "http://artclass.eu.org:18081/GetContent";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -52,7 +52,8 @@ async function callCHATGPT(language,targetElementId='chatgpt-response_D') {
     var data = JSON.stringify({
       "prompt": inputText,
       "salf_cdoe": "12354",
-      "language_type": language
+      "language_type": language,
+      "using_func": targetElementId
       // "max_tokens": 2048,
       // "temperature": 0.5,
       // "top_p": 1,
@@ -69,25 +70,26 @@ async function callCHATGPT(language,targetElementId='chatgpt-response_D') {
 function showDiv(textarea_module) {
     var div = document.getElementById(textarea_module);
     div.style.display = "block";
-    // if (textarea_module === "div_auto_display_P") {
-    //     var div = document.getElementById(textarea_module);
-    //     div.style.display = "block";
-    //   }
-    // else if (textarea_module === "div_auto_display_Si") {
-    //     var div = document.getElementById(textarea_module);
-    //     div.style.display = "block";
-    //   }
-    // else if (textarea_module === "div_auto_display_S") {
-    //     var div = document.getElementById(textarea_module);
-    //     div.style.display = "block";
-    //   }
-    // else if (textarea_module === "div_auto_display_W") {
-    //     var div = document.getElementById(textarea_module);
-    //     div.style.display = "block";
-    //   }
-    // else if (textarea_module === "div_auto_display_C") {
-    //     var div = document.getElementById(textarea_module);
-    //     div.style.display = "block";
-    //   }
-
     }
+  
+// var textareas = document.getElementsByTagName('textarea');
+// var maxLength = 10;
+// textareas.setAttribute('maxlength', maxLength);
+// textareas.addEventListener('input', function() {
+//   if (this.value.length > maxLength) {
+//       this.value = this.value.slice(0, maxLength);
+//   }
+// });
+
+
+// for (var i = 0; i < textareas.length; i++) {
+//   textareas[i].setAttribute('maxlength', maxLength);
+// }
+
+// var myTextarea = document.getElementById('myTextarea');
+// var maxLength = 4000;
+// myTextarea.addEventListener('input', function() {
+//     if (this.value.length > maxLength) {
+//         this.value = this.value.slice(0, maxLength);
+//     }
+// });
