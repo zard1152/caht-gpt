@@ -161,29 +161,30 @@ def choose_prompt(google_translated,using_func,external_api_key):
 @SV.route("/GetContent", methods=["POST"])
 def index():
     Referer = request.headers.get("Referer")
-    if "artclass.eu.org" in Referer :
-        try:
-            message = request.json["prompt"] # "" if not prompt key: return "",not KeyError
-            if message.strip() == "":
-                time.sleep(1)
-                return jsonify({"text": "so short"}),200
-            if any(x in message for x in sensitive_words_list): # check for sensitive word 
-                return jsonify({"text": '请不要涉zheng'}),200
-            language_type = request.json["language_type"]
-            using_func = request.json["using_func"]
-            external_api_key = request.json["api_key"]
-            # print(message)
-            google_translated = translate_languages(message,"en")
-            chat_answer = choose_prompt(google_translated,using_func,external_api_key)
-            if language_type != 'en':
-                answer_for_customer = translate_languages(chat_answer, "zh-cn")
-                return jsonify({"text": answer_for_customer}),200  # + " Function executed successfully"
-            resp = jsonify({"text": chat_answer})
-            # print("resp:" ,resp)
-            return resp,200  # + " Function executed successfully"
-        except:
-            return  jsonify({"text": 'request error'}),200
-    else:
+    try:
+        if "artclass.eu.org" in Referer :
+            try:
+                message = request.json["prompt"] # "" if not prompt key: return "",not KeyError
+                if message.strip() == "":
+                    time.sleep(1)
+                    return jsonify({"text": "so short"}),200
+                if any(x in message for x in sensitive_words_list): # check for sensitive word 
+                    return jsonify({"text": '请不要涉zheng'}),200
+                language_type = request.json["language_type"]
+                using_func = request.json["using_func"]
+                external_api_key = request.json["api_key"]
+                # print(message)
+                google_translated = translate_languages(message,"en")
+                chat_answer = choose_prompt(google_translated,using_func,external_api_key)
+                if language_type != 'en':
+                    answer_for_customer = translate_languages(chat_answer, "zh-cn")
+                    return jsonify({"text": answer_for_customer}),200  # + " Function executed successfully"
+                resp = jsonify({"text": chat_answer})
+                # print("resp:" ,resp)
+                return resp,200  # + " Function executed successfully"
+            except:
+                return  jsonify({"text": 'request error'}),200
+    except:
         return jsonify({"text": "Authentication failed"}),200
 
 
