@@ -111,7 +111,10 @@ def index():
     Referer = request.headers.get("Referer")
     if "artclass.eu.org" in Referer :
         try:
-            message = request.json["prompt"]
+            message = request.json["prompt",""] # "", if not prompt key,return "",not KeyError
+            if message.strip() == "":
+                time.sleep(1)
+                return jsonify({"text": "so short"})
             if any(x in message for x in ["qwe123", "qwe1234"]): # check for sensitive word 
                 return jsonify({"text": '请不要涉zheng'}),200
             language_type = request.json["language_type"]

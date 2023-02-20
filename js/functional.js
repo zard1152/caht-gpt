@@ -1,8 +1,9 @@
-async function callCHATGPT(language) {
-    var responseText1 = document.getElementById("chatgpt-response");
+async function callCHATGPT(language,targetElementId='chatgpt-response_D') {
+    // var responseText1 = document.getElementById("chatgpt-response");
+    var responseText1 = document.getElementById(targetElementId);
     responseText1.innerHTML = ""
     function printMessage(message) {
-      var responseText = document.getElementById("chatgpt-response");
+      var responseText = document.getElementById(targetElementId);
       var index = 0;
 
       // 创建一个定时器，每隔一段时间打印一个字符
@@ -31,7 +32,7 @@ async function callCHATGPT(language) {
         // var response = json.choices[0].text;
         var response = json.text
         // 将CHATGPT的返回值输出到文本框
-        var responseText = document.getElementById("chatgpt-response");
+        var responseText = document.getElementById(targetElementId);
         var index = 0;
 
         // 创建一个定时器，每隔一段时间打印一个字符
@@ -65,26 +66,28 @@ async function callCHATGPT(language) {
   }
 
   
-  function showDiv(textarea_module) {
-    if (textarea_module === "div_auto_display_P") {
-        var div = document.getElementById(textarea_module);
-        div.style.display = "block";
-      }
-    else if (textarea_module === "div_auto_display_Si") {
-        var div = document.getElementById(textarea_module);
-        div.style.display = "block";
-      }
-    else if (textarea_module === "div_auto_display_S") {
-        var div = document.getElementById(textarea_module);
-        div.style.display = "block";
-      }
-    else if (textarea_module === "div_auto_display_W") {
-        var div = document.getElementById(textarea_module);
-        div.style.display = "block";
-      }
-    else if (textarea_module === "div_auto_display_C") {
-        var div = document.getElementById(textarea_module);
-        div.style.display = "block";
-      }
+function showDiv(textarea_module) {
+    var div = document.getElementById(textarea_module);
+    div.style.display = "block";
+    // if (textarea_module === "div_auto_display_P") {
+    //     var div = document.getElementById(textarea_module);
+    //     div.style.display = "block";
+    //   }
+    // else if (textarea_module === "div_auto_display_Si") {
+    //     var div = document.getElementById(textarea_module);
+    //     div.style.display = "block";
+    //   }
+    // else if (textarea_module === "div_auto_display_S") {
+    //     var div = document.getElementById(textarea_module);
+    //     div.style.display = "block";
+    //   }
+    // else if (textarea_module === "div_auto_display_W") {
+    //     var div = document.getElementById(textarea_module);
+    //     div.style.display = "block";
+    //   }
+    // else if (textarea_module === "div_auto_display_C") {
+    //     var div = document.getElementById(textarea_module);
+    //     div.style.display = "block";
+    //   }
 
     }
