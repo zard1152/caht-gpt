@@ -132,6 +132,7 @@ def choose_prompt(google_translated,using_func,external_api_key):
     chatgpt-response_P = practice
     '''
     if len(external_api_key) == len(api_key):
+        print(external_api_key)
         if using_func == 'chatgpt-input_D':
             answer = send_message(google_translated + default_prompt,external_api_key)
         elif using_func == 'chatgpt-input_C':

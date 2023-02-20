@@ -1,7 +1,7 @@
 async function callCHATGPT(language='en',targetElementId='chatgpt-response_D',inputElementId='chat-gpt-input') {
     // var responseText1 = document.getElementById("chatgpt-response");
     var responseText1 = document.getElementById(targetElementId);
-    var api_key = document.getElementById(input_api_key);
+    var api_key = document.getElementById("input_api_key").value;
     responseText1.innerHTML = ""
     function printMessage(message) {
       var responseText = document.getElementById(targetElementId);
@@ -44,9 +44,10 @@ async function callCHATGPT(language='en',targetElementId='chatgpt-response_D',in
           // 当打印完成时，清除定时器
           if (index >= response.length) {
             clearInterval(interval);
+            // responseText.innerHTML += "/n";
           }
         },
-        50); // 每隔50毫秒打印一个字符
+        30); // 每隔n毫秒打印一个字符
       }
     };
     var data = JSON.stringify({
@@ -63,7 +64,7 @@ async function callCHATGPT(language='en',targetElementId='chatgpt-response_D',in
       // "model": "text-davinci-003"
     });
     console.log(data);
-    await printMessage('正在思考，请等待......');
+    await printMessage('正在思考，请等待.....\n');
     await xhr.send(data);
   }
 
