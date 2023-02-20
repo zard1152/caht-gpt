@@ -78,7 +78,7 @@ def translate_languages(translate_messages,dest='en') :
         # print("translate error: ", E)
         return "translate error"
 
-def send_message(message):
+def send_message(message,api_key=api_key):
     ## message = request.form["message"]
     local_message = message
     global req_retry_num
@@ -120,8 +120,9 @@ def send_message(message):
         if req_retry_num != 0 :
             send_message(local_message)
             return "Oops, Data acquisition failed and is being repaired"
-
-def choose_prompt(google_translated,using_func):
+answer = ''
+def choose_prompt(google_translated,using_func,external_api_key):
+    global answer
     '''
     chatgpt-input_D = default
     chat-gpt-input_C = default_eng
@@ -130,16 +131,29 @@ def choose_prompt(google_translated,using_func):
     chat-gpt-input_Si = simplifier
     chatgpt-response_P = practice
     '''
-    if using_func == 'chatgpt-input_D':
-        answer = send_message(google_translated + default_prompt)
-    elif using_func == 'chatgpt-input_C':
-        answer = send_message(google_translated + default_prompt)
-    elif using_func == 'chatgpt-input_W':
-        answer = send_message(weekly_report_prompt + google_translated)
-    elif using_func == 'chatgpt-input_S':
-        answer = send_message(summaries_prompt + google_translated )
-    elif using_func == 'chatgpt-input_Si':
-        answer = send_message(simplifier_prompt + google_translated)
+    if len(external_api_key) == len(api_key):
+        if using_func == 'chatgpt-input_D':
+            answer = send_message(google_translated + default_prompt,external_api_key)
+        elif using_func == 'chatgpt-input_C':
+            answer = send_message(google_translated + default_prompt,external_api_key)
+        elif using_func == 'chatgpt-input_W':
+            answer = send_message(weekly_report_prompt + google_translated,external_api_key)
+        elif using_func == 'chatgpt-input_S':
+            answer = send_message(summaries_prompt + google_translated,external_api_key)
+        elif using_func == 'chatgpt-input_Si':
+            answer = send_message(simplifier_prompt + google_translated,external_api_key)
+    else:
+        if using_func == 'chatgpt-input_D':
+            answer = send_message(google_translated + default_prompt)
+        elif using_func == 'chatgpt-input_C':
+            answer = send_message(google_translated + default_prompt)
+        elif using_func == 'chatgpt-input_W':
+            answer = send_message(weekly_report_prompt + google_translated)
+        elif using_func == 'chatgpt-input_S':
+            answer = send_message(summaries_prompt + google_translated )
+        elif using_func == 'chatgpt-input_Si':
+            answer = send_message(simplifier_prompt + google_translated)
+            
     print("google_translated,using_func: ",using_func,google_translated)
     return answer
         
@@ -148,7 +162,7 @@ def index():
     Referer = request.headers.get("Referer")
     if "artclass.eu.org" in Referer :
         try:
-            message = request.json["prompt",""] # "", if not prompt key,return "",not KeyError
+            message = request.json["prompt",""] # "" if not prompt key: return "",not KeyError
             if message.strip() == "":
                 time.sleep(1)
                 return jsonify({"text": "so short"}),200
@@ -156,9 +170,10 @@ def index():
                 return jsonify({"text": '请不要涉zheng'}),200
             language_type = request.json["language_type"]
             using_func = request.json["using_func"]
+            external_api_key = request.json["api_key"]
             # print(message)
             google_translated = translate_languages(message,"en")
-            chat_answer = choose_prompt(google_translated,using_func)
+            chat_answer = choose_prompt(google_translated,using_func,external_api_key)
             if language_type != 'en':
                 answer_for_customer = translate_languages(chat_answer, "zh-cn")
                 return jsonify({"text": answer_for_customer}),200  # + " Function executed successfully"

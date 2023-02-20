@@ -23,7 +23,7 @@ pip3 install flask googletrans wsgiref pyyaml
 
 change api_key use following command:
 ```
-sed -i "s/api_key =.*/api_key = {key}/g" /var/www/html/back_end.py
+sed -i "s/api_key:.*/api_key: {key}/g" /var/www/html/config.yaml
 
 python3 /var/www/html/back_end.py
 ```

@@ -1,6 +1,6 @@
 api_key: "sk-123"
 sensitive_words: "qwe123,qwe1234"
-default_prompt: ",Please embellish your answer for human understanding"
+default_prompt: ",Please embellish you  r answer for human understanding"
 simplifier_prompt: "请总结<start>之后的聊天内容。要求简明扼要，以包含列表的大纲形式输出。\n<start> "
 weekly_report_prompt: "请帮我把以下的工作内容填充为一篇完整的周报,用 markdown 格式以分点叙述的形式输出: "
 summaries_prompt: "请提炼<start>之后的文章内容帮我总结。以更便于人类理解的方式 <start> "

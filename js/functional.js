@@ -48,12 +48,13 @@ async function callCHATGPT(language='en',targetElementId='chatgpt-response_D',in
         50); // 每隔50毫秒打印一个字符
       }
     };
-
+    var api_key = document.getElementById(input_api_key);
     var data = JSON.stringify({
       "prompt": inputText,
       "salf_cdoe": "12354",
       "language_type": language,
-      "using_func": targetElementId
+      "using_func": targetElementId,
+      "api_key": api_key
       // "max_tokens": 2048,
       // "temperature": 0.5,
       // "top_p": 1,
