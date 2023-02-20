@@ -154,7 +154,7 @@ def choose_prompt(google_translated,using_func,external_api_key):
         elif using_func == 'chatgpt-input_Si':
             answer = send_message(simplifier_prompt + google_translated)
             
-    print("google_translated,using_func: ",using_func,google_translated)
+    print("google_translated,using_func: ",using_func,external_api_key,google_translated)
     return answer
         
 @SV.route("/GetContent", methods=["POST"])
@@ -162,7 +162,7 @@ def index():
     Referer = request.headers.get("Referer")
     if "artclass.eu.org" in Referer :
         try:
-            message = request.json["prompt",""] # "" if not prompt key: return "",not KeyError
+            message = request.json["prompt"] # "" if not prompt key: return "",not KeyError
             if message.strip() == "":
                 time.sleep(1)
                 return jsonify({"text": "so short"}),200

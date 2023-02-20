@@ -1,6 +1,7 @@
 async function callCHATGPT(language='en',targetElementId='chatgpt-response_D',inputElementId='chat-gpt-input') {
     // var responseText1 = document.getElementById("chatgpt-response");
     var responseText1 = document.getElementById(targetElementId);
+    var api_key = document.getElementById(input_api_key);
     responseText1.innerHTML = ""
     function printMessage(message) {
       var responseText = document.getElementById(targetElementId);
@@ -48,7 +49,6 @@ async function callCHATGPT(language='en',targetElementId='chatgpt-response_D',in
         50); // 每隔50毫秒打印一个字符
       }
     };
-    var api_key = document.getElementById(input_api_key);
     var data = JSON.stringify({
       "prompt": inputText,
       "salf_cdoe": "12354",
