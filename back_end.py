@@ -178,10 +178,12 @@ def index():
                 chat_answer = choose_prompt(google_translated,using_func,external_api_key)
                 if language_type != 'en':
                     answer_for_customer = translate_languages(chat_answer, "zh-cn")
-                    return jsonify({"text": answer_for_customer}),200  # + " Function executed successfully"
+                    resp = jsonify({"text": answer_for_customer})
+                    print("resp:" ,resp)
+                    return resp,200 
                 resp = jsonify({"text": chat_answer})
-                # print("resp:" ,resp)
-                return resp,200  # + " Function executed successfully"
+                print("resp:" ,resp)
+                return resp,200 
             except:
                 return  jsonify({"text": 'request error'}),200
     except:

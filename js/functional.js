@@ -17,7 +17,7 @@ async function callCHATGPT(language='en',targetElementId='chatgpt-response_D',in
           clearInterval(interval);
         }
       },
-      150); // 每隔50毫秒打印一个字符
+      50); // 每隔50毫秒打印一个字符
     }
     var xhr = new XMLHttpRequest();
     // var url = "https://api.openai.com/v1/completions";
@@ -44,10 +44,9 @@ async function callCHATGPT(language='en',targetElementId='chatgpt-response_D',in
           // 当打印完成时，清除定时器
           if (index >= response.length) {
             clearInterval(interval);
-            // responseText.innerHTML += "/n";
           }
         },
-        30); // 每隔n毫秒打印一个字符
+        50); // 每隔n毫秒打印一个字符
       }
     };
     var data = JSON.stringify({
