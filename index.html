@@ -26,7 +26,73 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    <script src="js/functional.js"></script>
+    <script>
+	    async function callCHATGPT(language) {
+		var responseText1 = document.getElementById("chatgpt-response");
+		responseText1.innerHTML = ""
+        function printMessage(message) {
+          var responseText = document.getElementById("chatgpt-response");
+          var index = 0;
+
+          // 创建一个定时器，每隔一段时间打印一个字符
+          var interval = setInterval(function() {
+            responseText.innerHTML += message[index];
+            index++;
+
+            // 当打印完成时，清除定时器
+            if (index >= message.length) {
+              clearInterval(interval);
+            }
+          },
+          150); // 每隔50毫秒打印一个字符
+        }
+        var xhr = new XMLHttpRequest();
+        // var url = "https://api.openai.com/v1/completions";
+        var inputText = document.getElementById("chat-gpt-input").value;
+        var url = "http://artclass.eu.org:18081/GetContent";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.setRequestHeader("Authorization", "Bearer 123456");
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+            // var response = json.choices[0].text;
+            var response = json.text
+            // 将CHATGPT的返回值输出到文本框
+            var responseText = document.getElementById("chatgpt-response");
+            var index = 0;
+
+            // 创建一个定时器，每隔一段时间打印一个字符
+            var interval = setInterval(function() {
+              responseText.innerHTML += response[index];
+              index++;
+
+              // 当打印完成时，清除定时器
+              if (index >= response.length) {
+                clearInterval(interval);
+              }
+            },
+            50); // 每隔50毫秒打印一个字符
+          }
+        };
+
+        var data = JSON.stringify({
+          "prompt": inputText,
+          "salf_cdoe": "12354",
+          "language_type": language
+          // "max_tokens": 2048,
+          // "temperature": 0.5,
+          // "top_p": 1,
+          // "frequency_penalty": 0,
+          // "presence_penalty": 0,
+          // "model": "text-davinci-003"
+        });
+        console.log(data);
+        await printMessage('正在思考，请等待......');
+		await xhr.send(data);
+      }
+	</script>
   </head>
 
   <body>
@@ -55,101 +121,29 @@
       <div class="call-to-action-area gray-bg ptb-60" style=" box-sizing: border-box;">
         <div class="container">
           <div class="row">
+            <!-- <div class="col-md-9 col-sm-9 col-xs-12"> -->
               <div class="form-group">
                 <label></label>
-                <textarea class="form-control" id="input_api_key" placeholder="Api key: sk-......, if you have" rows="1" resize="none" style="box-sizing:border-box;width: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
+                <textarea class="form-control" id="chat-gpt-input" placeholder="输入问题描述" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
               </div>
-
-              <div class="form-group">
-                <label></label>
-                <textarea class="form-control" id="chatgpt-response_D"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
+              <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="call-to-action">
+                  <button onclick="callCHATGPT(language='cn')" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">用中文回答我</span>
+                </div>
+                <p></p>
+                <div class="call-to-action">
+                    <button onclick="callCHATGPT(language='en')" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Answer in Eng</span>
+                </div>
               </div>
-              <div class="call-to-action">
-                <button onclick="callCHATGPT(language='cn',targetElementId='chatgpt-response_D',inputElementId='chat-gpt-input_C')" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
-                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">用中文回答我</span>
-              </div>
-
-
-              <div class="form-group" id="div_auto_display_C" style="display:none">
-                <label></label>
-                <textarea class="form-control" id="chatgpt-response_C"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
-              </div>
-              <div class="form-group">
-                <label></label>
-                <textarea class="form-control" id="chat-gpt-input_C" maxlength="3800" placeholder="输入问题描述,如: 在没有任何路可走时, 有一辆看不到前程的车, 我应不应该上车, 为什么大多数人选择了坐" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
-              </div>
-              <div class="call-to-action">
-                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_C',inputElementId='chat-gpt-input_C');showDiv('div_auto_display_C');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Answer in Eng</span>
-              </div>
-
-              
-              <div class="form-group" id="div_auto_display_W" style="display:none">
-                <label></label>
-                <textarea class="form-control" id="chatgpt-response_W"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
-              </div>
-              <div class="form-group">
-                <label></label>
-                <textarea class="form-control" id="chat-gpt-input_W" placeholder="周报生成: 给出大纲, 生成周报. 示例: 完善文档, 健身, 玩电脑." maxlength="3800" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
-              </div>
-              <div class="call-to-action">
-                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_W',inputElementId='chat-gpt-input_W');showDiv('div_auto_display_W');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Make weekly report</span>
-              </div>
-
-
-
-              <div class="form-group" id="div_auto_display_S" style="display:none">
-                <label></label>
-                <textarea class="form-control" id="chatgpt-response_S"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
-              </div>
-              <div class="form-group">
-                <label></label>
-                <textarea class="form-control" id="chat-gpt-input_S" placeholder="总结文章内容" rows="3" resize="none" maxlength="3800" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
-              </div>
-              <div class="call-to-action">
-                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_S',inputElementId='chat-gpt-input_S');showDiv('div_auto_display_S');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
-                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Summary content</span>
-              </div>
-
-
-
-              <div class="form-group" id="div_auto_display_Si" style="display:none">
-                <label></label>
-                <textarea class="form-control" id="chatgpt-response_Si"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
-              </div>
-              <div class="form-group">
-                <label></label>
-                <textarea class="form-control" id="chat-gpt-input_Si" placeholder="简化聊天内容" rows="3" resize="none" maxlength="3800" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
-              </div>
-              <div class="call-to-action">
-                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_Si',inputElementId='chat-gpt-input_Si');showDiv('div_auto_display_Si');" autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
-                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Chat Simplifier</span>
-              </div>
-              
-
-
-              <div class="form-group" id="div_auto_display_P" style="display:none">
-                <label></label>
-                <textarea class="form-control" id="chatgpt-response_P"  rows="6" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: 50%; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label></label>
-                <textarea class="form-control" id="chat-gpt-input_P" placeholder="英文对练-------------暂未开放"  maxlength="3800" rows="3" resize="none" style="box-sizing:border-box;width: 100%; margin: 0 auto; background-color:#f4f4f4; color: #333;border: 1px solid #ccc; border-radius: 12px;"></textarea>
-              </div>
-              <div class="call-to-action">
-                <button onclick="callCHATGPT(language='en',targetElementId='chatgpt-response_P',inputElementId='chat-gpt-input_P');showDiv('div_auto_display_P');" disabled autocomplete="off" class="btn btn-large" href="#" style="background-color: #333; color: #f4f4f4; border-radius: 10px">
-                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">practice eng</span>
-              </div>
-              <!-- <div class="col-md-3 col-sm-3 col-xs-12">
-
-
-              </div> -->
-              <!-- <div class="col-md-9 col-sm-9 col-xs-12"> -->
-
+              <div class="col-md-9 col-sm-9 col-xs-12">
+                <div class="form-group">
+                  <label></label>
+                  <textarea class="form-control" id="chatgpt-response" placeholder="长途访问，请耐心等待回答 Ai生成它很快，但是由于网络问题我们需要等待，通常内容越长等待越久 如果长时间没反应请刷新页面重试" rows="26" resize="vertical" box-sizing="border-box" style="box-sizing:border-box;width: 100%;height: auto; margin: 0 auto; background-color:#f4f4f4; color: #333; border: 1px solid #ccc; border-radius: 10px; overflow: scroll;" readonly="true"></textarea>
+                </div>
               <!-- </div> -->
-            <!-- </div> -->
+            </div>
           </div>
 		</div>
 		<footer>
@@ -162,7 +156,7 @@
 						<!-- <p>国外手机号接码：<a href="https://sms-activate.org/?ref=2461182">https://sms-activate.org</a></p> -->
             <p>自用站点推荐：<a href="https://dash.bitznetuk.com/#/register?code=2vWB2iCa">https://dash.bitznetuk.com/#/register?code=2vWB2iCag</a></p>
 						<p>关注最新AI知识, 互相交流进步: <a href="https://xiaobot.net/p/aiyanjiu?refer=813ec960-dac9-4913-a14b-c3a723c0d9b8">https://xiaobot.net/p/aiyanjiu?refer=813ec960-dac9-4913-a14b-c3a723c0d9b8</a></p>
-            <p><a href="https://cloud.tencent.com/developer/article/2192663">此网站搭建教程,点击跳转</a></p>
+            <p>此网站搭建教程,点击跳转<a href="https://cloud.tencent.com/developer/article/2192663"></a></p>
             <!-- <p>项目地址,点击跳转<a href="https://github.com/zard1152/chat-gpt.git"></a></p> -->
             <hr>
 						<hr>

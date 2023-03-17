@@ -31,13 +31,6 @@ weekly_report_prompt = config['weekly_report_prompt']
 summaries_prompt = config['summaries_prompt']
 
 
-# model = "text-ada-001,text-babbage-001,text-curie-001,text-davinci-003"
-# url = 'https://api.openai.com/v1/engines/text-davinci-003'
-# openai.api_key = api_key
-# openai.Model.list()
-# api_key = "sk-123"
-# translator = Translator(service_urls=['translate.google.com','translate.google.co.kr'])
-
 
 def calculator_exec_time(run_time):
     hour = run_time // 3600
@@ -45,18 +38,6 @@ def calculator_exec_time(run_time):
     second = run_time - 3600 * hour - 60 * minute
     return f'time-consuming: {hour}h{minute}m{second}s'
 
-# def set_up_hooks(coustomer_messages,dest='en'):
-#     try :
-#         tranlated = translate_languages(coustomer_messages,dest=dest)
-#         print(tranlated)
-#         return tranlated
-#     except Exception as E:
-#         print("translate error: ",E)
-
-
-# def tear_down_hooks(coustomer_messages):
-#     translate_languages(coustomer_messages,dest='zh-cn')
-#     pass
 def count_use():
     try:
         with open("count_use.txt", "r+") as file:
@@ -69,15 +50,6 @@ def count_use():
         with open("count_use.txt", "w") as file:
             file.write("1")
 
-
-def translate_languages(translate_messages,dest='en') :
-    try:
-        tranlated = translator.translate(translate_messages, dest=dest)
-        # print(tranlated.text)
-        return tranlated.text
-    except Exception as E:
-        # print("translate error: ", E)
-        return "translate error"
 
 def send_message(message,api_key=api_key):
     ## message = request.form["message"]
@@ -121,44 +93,7 @@ def send_message(message,api_key=api_key):
         if req_retry_num != 0 :
             send_message(local_message)
             return "Oops, Data acquisition failed and is being repaired"
-answer = ''
-def choose_prompt(google_translated,using_func,external_api_key):
-    global answer
-    '''
-    chatgpt-input_D = default
-    chat-gpt-input_C = default_eng
-    chat-gpt-input_W = weekly
-    chat-gpt-input_S = summaries
-    chat-gpt-input_Si = simplifier
-    chatgpt-response_P = practice
-    '''
-    if len(external_api_key) == len(api_key):
-        print(external_api_key)
-        if using_func == 'chatgpt-input_D':
-            answer = send_message(google_translated + default_prompt,external_api_key)
-        elif using_func == 'chatgpt-input_C':
-            answer = send_message(google_translated + default_prompt,external_api_key)
-        elif using_func == 'chatgpt-input_W':
-            answer = send_message(weekly_report_prompt + google_translated,external_api_key)
-        elif using_func == 'chatgpt-input_S':
-            answer = send_message(summaries_prompt + google_translated,external_api_key)
-        elif using_func == 'chatgpt-input_Si':
-            answer = send_message(simplifier_prompt + google_translated,external_api_key)
-    else:
-        if using_func == 'chatgpt-input_D':
-            answer = send_message(google_translated + default_prompt)
-        elif using_func == 'chatgpt-input_C':
-            answer = send_message(google_translated + default_prompt)
-        elif using_func == 'chatgpt-input_W':
-            answer = send_message(weekly_report_prompt + google_translated)
-        elif using_func == 'chatgpt-input_S':
-            answer = send_message(summaries_prompt + google_translated )
-        elif using_func == 'chatgpt-input_Si':
-            answer = send_message(simplifier_prompt + google_translated)
-            
-    print("google_translated,using_func: ",using_func,external_api_key,google_translated)
-    return answer
-        
+
 @SV.route("/GetContent", methods=["POST"])
 def index():
     Referer = request.headers.get("Referer")
@@ -175,7 +110,7 @@ def index():
                 using_func = request.json["using_func"]
                 external_api_key = request.json["api_key"]
                 # print(message)
-                google_translated = translate_languages(message,"en")
+                
                 chat_answer = choose_prompt(google_translated,using_func,external_api_key)
                 if language_type != 'en':
                     answer_for_customer = translate_languages(chat_answer, "zh-cn")

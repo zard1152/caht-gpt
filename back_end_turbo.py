@@ -12,7 +12,7 @@ SV = Flask(__name__)
 CORS(SV) # allow cross-domain
 
 using_model = "text-davinci-003"
-
+using_model = "gpt-3.5-turbo"
 
 url = 'https://api.openai.com/v1/completions'
 proxies = {"http": "http://127.0.0.1:7890", "https": "http://127.0.0.1:7890"}
@@ -31,32 +31,12 @@ weekly_report_prompt = config['weekly_report_prompt']
 summaries_prompt = config['summaries_prompt']
 
 
-# model = "text-ada-001,text-babbage-001,text-curie-001,text-davinci-003"
-# url = 'https://api.openai.com/v1/engines/text-davinci-003'
-# openai.api_key = api_key
-# openai.Model.list()
-# api_key = "sk-123"
-# translator = Translator(service_urls=['translate.google.com','translate.google.co.kr'])
-
-
 def calculator_exec_time(run_time):
     hour = run_time // 3600
     minute = (run_time - 3600 * hour) // 60
     second = run_time - 3600 * hour - 60 * minute
     return f'time-consuming: {hour}h{minute}m{second}s'
 
-# def set_up_hooks(coustomer_messages,dest='en'):
-#     try :
-#         tranlated = translate_languages(coustomer_messages,dest=dest)
-#         print(tranlated)
-#         return tranlated
-#     except Exception as E:
-#         print("translate error: ",E)
-
-
-# def tear_down_hooks(coustomer_messages):
-#     translate_languages(coustomer_messages,dest='zh-cn')
-#     pass
 def count_use():
     try:
         with open("count_use.txt", "r+") as file:
@@ -79,6 +59,37 @@ def translate_languages(translate_messages,dest='en') :
         # print("translate error: ", E)
         return "translate error"
 
+
+def openai_chat(prompt, history):
+
+    if not prompt:
+        return gr.update(value='', visible=len(history) < 10), [(history[i]['content'], history[i+1]['content']) for i in range(0, len(history)-1, 2)], history
+
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+    prompt_msg = {
+                "role": "user",
+                "content": prompt
+            }
+    
+    data = {
+        "model": "gpt-3.5-turbo",
+        "messages": history + [prompt_msg]
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+    json_data = json.loads(response.text)
+
+    response = json_data["choices"][0]["message"]
+
+    history.append(prompt_msg)
+    history.append(response)
+
+    return gr.update(value='', visible=len(history) < 10), [(history[i]['content'], history[i+1]['content']) for i in range(0, len(history)-1, 2)], history
+
 def send_message(message,api_key=api_key):
     ## message = request.form["message"]
     local_message = message
@@ -91,24 +102,16 @@ def send_message(message,api_key=api_key):
                 "Authorization": "Bearer " + api_key
             },
             json={
-            # "top_p": 1,
-            # "frequency_penalty": 0,
-            # "model": "text-davinci-003"
-            "model": using_model, 
-            "prompt": message, 
-            "temperature": 0.8,
-            "presence_penalty": 0, 
-            "stream": True,
-            "max_tokens": 4000
+            "model": using_model,
+            "messages": [{"role": "user", "content": message}]
             }
+
         )
 
-
-        # print(response.json())
         if response.json()["choices"]:
             req_retry_num = 3 # init because success
             get_data_failed_num = 10
-            response_text = response.json()["choices"][0]["text"]
+            response_text = response.json()["choices"][0]["message"]["content"]
             # print(response_text)
             return response_text  
         else:
@@ -197,29 +200,3 @@ if __name__ == '__main__':
     server.serve_forever()
 
 
-
-#     begin_time = time.time()
-#     end_time = time.time()
-#     run_time = round(end_time - begin_time)
-#     print( calculator_exec_time(run_time))
-
-'''
-
-'''
-# test_data
-
-# send_message("you are chatGPT3 ?")
-# send_message("where is chatGPT3 API")
-# send_message("compare you and chatGPT3")
-# send_message("you are a human? how to prove")
-# send_message("i dont need human, i need chatGPT3")
-# send_message("please give me chatGPT3 API")
-# send_message("Please explain how a microwave oven works, Please embellish your answer for human understanding")
-
-
-# translate_languages("Please explain how a microwave oven works, Please embellish your answer for human understanding")
-# send_message("Do you have training data for 2022")
-# send_message("Do you have training data for 2022,Please embellish your answer for human understanding")
-# send_message("Please explain how a microwave oven works, Please embellish your answer for human understanding")
-# set_up_hooks("What free translation apis are available")
-# tear_down_hooks(send_message("1"))
